@@ -1,7 +1,7 @@
+//这是有关 new 运算符重载的实例，以此一可以反三
 #include <cstddef>
 #include <iostream>
 #include <new>
-#include <ostream>
 #include <string>
 
 void* operator new(std::size_t n,std::string file,int line){
