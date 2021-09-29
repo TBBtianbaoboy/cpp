@@ -19,6 +19,7 @@ class Search{
         static bool bs(SearchObj&,const int&);
 };
 
+//@desc major body
 bool Search::bs(SearchObj& obj, const int& aim)
 {
     int l{},r = obj.getlength();
