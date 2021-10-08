@@ -13,7 +13,7 @@ class LinkNode {
         void setNextNode(LinkNode<KEY,VALUE>* next); //设置下一个结点
         LinkNode<KEY,VALUE>* getNext(); //获取下一个结点
         KEY& getKey() const; //获取哈希键
-        VALUE& getValue() const; //获取值
+        VALUE getValue() const; //获取值
 };
 //@desc 实现
 template<typename KEY,typename VALUE>
@@ -41,6 +41,6 @@ KEY& LinkNode<KEY,VALUE>::getKey()const {
 }
 
 template<typename KEY,typename VALUE>
-VALUE& LinkNode<KEY,VALUE>::getValue()const {
+VALUE LinkNode<KEY,VALUE>::getValue()const {
     return value;
 }

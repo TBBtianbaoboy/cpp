@@ -48,30 +48,28 @@ template <typename KEY, typename VALUE> HashTable<KEY, VALUE>::~HashTable() {
   delete[] hashArray;
 }
 
-//@desc 获取哈希表桶的数量
+//@desc 获取哈希表桶的数量 @test success
 template <typename KEY,typename VALUE>
 unsigned int HashTable<KEY,VALUE>::getBucketNum()const{
     return bucket;
 }
 
-//@desc 获取哈希表结点的数量
+//@desc 获取哈希表结点的数量 @test success
 template <typename KEY,typename VALUE>
 unsigned int HashTable<KEY,VALUE>::getSize()const{
     return size;
 }
 
-//@desc
-//向哈希表中插入数据-----------------------------------------------------未考虑异常情况，只实现基本功能
+//@desc 向哈希表中插入数据 @test success
 template <typename KEY, typename VALUE>
 bool HashTable<KEY, VALUE>::insertValue(const VALUE &value) {
   VALUE a = value;
   KEY bucket_num = hashFunc(value);
-  cout << "bucket_num = " << bucket_num << endl;
+  cout << "value = " << value << ",bucket_num = " << bucket_num << endl;
   ptrLinkNode pointer = hashArray[bucket_num];
   ptrLinkNode newNode = new LinkNode<KEY, VALUE>(bucket_num, a);
-  ptrLinkNode tmp = pointer;
-  pointer = newNode;
-  pointer->setNextNode(tmp);
+  newNode->setNextNode(pointer);
+  hashArray[bucket_num] = newNode;
   ++size;
   return true;
 }
@@ -80,42 +78,22 @@ bool HashTable<KEY, VALUE>::insertValue(const VALUE &value) {
 template <typename KEY, typename VALUE>
 bool HashTable<KEY, VALUE>::deleteValue(const VALUE &value) {
   KEY bucket_num = hashFunc(value);
-  ptrLinkNode pointer = hashArray[bucket_num];
-  while (pointer) {
-    if (pointer->getValue() == value) {
-      if (pointer->getPrev() == nullptr) {
-        ptrLinkNode pointer2 = pointer->getNext();
-        delete pointer;
-        pointer = pointer2;
-        pointer->setPrevNode(nullptr);
-        --size;
-        return true;
-      } else if (pointer->getNext() == nullptr) {
-        ptrLinkNode pointer2 = pointer->getPrev();
-        delete pointer;
-        pointer2->setNextNode(nullptr);
-        --size;
-        return true;
-      } else {
-        ptrLinkNode pointer_l = pointer->getPrev();
-        ptrLinkNode pointer_r = pointer->getNext();
-        delete pointer;
-        pointer_l->setNextNode(pointer_r);
-        pointer_r->setPrevNode(pointer_l);
-        --size;
-        return true;
-      }
-    }
-    pointer = pointer->getNext();
-  }
+  ptrLinkNode prev = hashArray[bucket_num];
+  // while(prev){
+  //     ptrLinkNode pointer = prev->getNext();
+  //     if(prev->getValue() == value){
+  //         //........
+  //     }
+  // }
   return false;
 }
 
-//@desc 在哈希表中寻找数据
+//@desc 在哈希表中寻找数据 @test success
 template <typename KEY, typename VALUE>
 bool HashTable<KEY, VALUE>::searchValue(const VALUE &value) const {
   KEY bucket_num = hashFunc(value);
-  LinkNode<KEY, VALUE> *pointer = hashArray[bucket_num];
+  cout << "start search " << value << ",bucket number is " << bucket_num << endl;
+  ptrLinkNode pointer = hashArray[bucket_num];
   while (pointer) {
     if (pointer->getValue() == value) {
       return true;
@@ -125,7 +103,7 @@ bool HashTable<KEY, VALUE>::searchValue(const VALUE &value) const {
   return false;
 }
 
-//@desc 输出哈希表
+//@desc 输出哈希表 @test success
 template <typename KEY,typename VALUE>
 void HashTable<KEY,VALUE>::printHash()const{
     for(int i=0;i<bucket;++i){
@@ -137,7 +115,7 @@ void HashTable<KEY,VALUE>::printHash()const{
     }
 }
 
-// hash function
+//@desc 哈希函数 @test success
 template <typename KEY, typename VALUE>
 KEY HashTable<KEY, VALUE>::hashFunc(const VALUE &value) const {
   int data_length = sizeof(value);
