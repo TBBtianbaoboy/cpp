@@ -3,7 +3,6 @@
 template<typename KEY,typename VALUE>
 class LinkNode {
     private:
-        LinkNode<KEY,VALUE> *pPrev; //指向上一个结点
         LinkNode<KEY,VALUE> *pNext; //指向下一个结点
         KEY key; //哈希键
         VALUE value; //值
@@ -13,14 +12,12 @@ class LinkNode {
         ~LinkNode();
         void setNextNode(LinkNode<KEY,VALUE>* next); //设置下一个结点
         LinkNode<KEY,VALUE>* getNext(); //获取下一个结点
-        void setPrevNode(LinkNode<KEY,VALUE>* prev); //设置上一个结点
-        LinkNode<KEY,VALUE>* getPrev(); //获取上一个结点
         KEY& getKey() const; //获取哈希键
-        VALUE getValue() const; //获取值
+        VALUE& getValue() const; //获取值
 };
 //@desc 实现
 template<typename KEY,typename VALUE>
-LinkNode<KEY,VALUE>::LinkNode(KEY& k,VALUE& v):pNext(nullptr),pPrev(nullptr){
+LinkNode<KEY,VALUE>::LinkNode(KEY& k,VALUE& v):pNext(nullptr){
     key = k;
     value = v;
 }
@@ -39,21 +36,11 @@ LinkNode<KEY,VALUE>* LinkNode<KEY,VALUE>::getNext(){
 }
 
 template<typename KEY,typename VALUE>
-void LinkNode<KEY,VALUE>::setPrevNode(LinkNode<KEY, VALUE> *prev){
-    this->pPrev = prev;
-}
-
-template<typename KEY,typename VALUE>
-LinkNode<KEY,VALUE>* LinkNode<KEY,VALUE>::getPrev(){
-    return pPrev;
-}
-
-template<typename KEY,typename VALUE>
 KEY& LinkNode<KEY,VALUE>::getKey()const {
     return key;
 }
 
 template<typename KEY,typename VALUE>
-VALUE LinkNode<KEY,VALUE>::getValue()const {
+VALUE& LinkNode<KEY,VALUE>::getValue()const {
     return value;
 }
