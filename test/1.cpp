@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <dbg.h>
+__attribute__(())
 
 class Test{
     private:
