@@ -60,6 +60,7 @@ int main(){
     }
 
     //@desc exception bad_alloc
+    //@other 有关 bad_alloc exception in 41
     test_bad_alloc();
 
     return 0;

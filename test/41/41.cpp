@@ -16,14 +16,15 @@ void test_nothrow_new(){
 }
 
 //@desc 测试抛出异常的 ::operate new
-void test_plain_new(){
+void test_plain_new()throw(std::bad_alloc){
     try{
-        char *p = new char[1024*1024*600];
+        char *p = new char[1024*1024*800];
         dbg("alloc auccess");
         delete [] p;
     }catch(std::exception &e){
         dbg(e.what());
         dbg("alloc failed");
+        throw;
     }
 }
 
@@ -61,7 +62,12 @@ int main(){
 
     test_nothrow_new();
 
-    test_plain_new();
+    try{
+        test_plain_new();
+    }catch(std::exception &e){
+        dbg(e.what(),"--------------");
+    }
+
 
     test_placement_new();
     return 0;
