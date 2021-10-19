@@ -1,4 +1,5 @@
 //@desc lambda 表式式,捕获体和函数体不能省略，其他的都可以省略,而且，lambda 表达式重载了() 运算符,似仿函数
+//@example [caputer](args)options -> return {};
 #include <dbg.h>
 #include <iostream>
 #include <ostream>
