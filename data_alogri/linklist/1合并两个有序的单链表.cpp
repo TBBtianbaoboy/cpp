@@ -16,7 +16,7 @@ myList* merge(myList* one,myList* two){
     myList* node = &head;
 
     while(one != nullptr && two != nullptr){
-        //@desc 如果是升序就是 < ，如果是降序就是 >
+        //@Annotation: 通过新建一个头结点来将这两个链表连接起来,原有指针依次向后移动即可。
         if(one->value > two->value){
             node->next = one;
             one = one->next;
@@ -28,6 +28,7 @@ myList* merge(myList* one,myList* two){
         node = node->next;
     }
 
+    //@Annotation: 最后还要将剩下的尾巴链接起来
     if (one==nullptr){
         node->next = two;
     }else if(two == nullptr){
