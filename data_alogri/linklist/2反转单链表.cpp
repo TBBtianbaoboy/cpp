@@ -1,93 +1,63 @@
-//@desc 反转链表 纯c++ 版本
-#include <stack>
 #include <iostream>
-#include <dbg.h>
+using std::cout;
+using std::endl;
 
-class Node{
-        int val;
-        Node *next;
-    public:
-        Node(int _val=0):val(_val),next(nullptr){}
-        ~Node(){}
-        Node* getNext()const{
-            return next;
-        }
-        void setNext(Node* _node){
-            next = _node;
-        }
-        int getVal()const{
-            return val;
-        }
+struct Node {
+  int value;
+  Node *next;
+  Node(const int &v) : value(v), next(nullptr) {}
 };
 
-class List final{
-    Node *head;
-    Node *tail;
-    int size;
-    public:
-        List():head(nullptr),tail(nullptr),size(0){
-            head = new Node();
-            tail = head;
-        }
-        ~List(){
-            while(head!=nullptr){
-                Node* _head = head->getNext();
-                delete head;
-                head = _head;
-            }
-        }
-        //@desc forbidden 
-        List(const List&)=delete;
-        List& operator=(const List&)=delete;
-        //@desc 追加结点
-        void append(int val){
-            Node* newNode = new Node(val);
-            tail->setNext(newNode);
-            ++size;
-            tail = tail->getNext();
-        }
-        //@desc 反转链表
-        void reverse(){
-            Node* body = head->getNext();
-            if(body==nullptr){
-                return ;
-            }
-            tail = head;  
-            std::stack<Node*> st;
+Node *reverseList(Node *head) {
+  if (head == nullptr || head->next == nullptr)
+    return head;
 
-            while(body){
-                st.push(body);
-                body = body->getNext();
-            }
+  //@answer: use three pointer to reverse forward list
+  Node *pre = head;
+  Node *now = head->next;
+  Node *last = now->next;
 
-            while(!st.empty())
-            {
-                tail->setNext(st.top());
-                st.pop();
-                tail = tail->getNext();
-            }
-            tail->setNext(nullptr); 
-        }
-        //@desc 打印链表
-        void print()const{
-            Node* n = head->getNext();
-            while(n){
-                std::cout << n->getVal() << " ";
-                n = n->getNext();
-            }
-            std::cout << std::endl;
-        }
-};
+  pre->next = nullptr;
+  while (last) {
+    now->next = pre;
+    pre = now;
+    now = last;
+    last = last->next;
+  }
+  now->next = pre;
+  return now;
+}
 
-int main(){
-    List l;
-    l.append(1);
-    l.append(2);
-    l.append(3);
-    l.append(4);
-    l.append(5);
-    l.print();
-    l.reverse();
-    l.print();
-    return 0;
+Node *initList() {
+  Node *n1 = new Node(1);
+  Node *n2 = new Node(2);
+  Node *n3 = new Node(3);
+  Node *n4 = new Node(4);
+  Node *n5 = new Node(5);
+  Node *n6 = new Node(6);
+
+  n1->next = n2;
+  n2->next = n3;
+  n3->next = n4;
+  n4->next = n5;
+  n5->next = n6;
+
+  return n1;
+}
+
+void printList(Node *head) {
+  if (head) {
+    while (head) {
+      cout << head->value << " ";
+      head = head->next;
+    }
+    cout << endl;
+  }
+}
+
+int main() {
+  Node *head = initList();
+  printList(head);
+  printList(reverseList(head));
+  return 0;
 }

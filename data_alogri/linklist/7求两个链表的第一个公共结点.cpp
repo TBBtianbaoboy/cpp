@@ -34,7 +34,7 @@ Node *getXNode(Node *n1, Node *n2) {
     for (int i = 0; i < length2 - length1; ++i)
       n2 = n2->next;
   }
-  //@brief: 同时向后进行移动，直到地址相同位置
+  //@brief: 同时向后进行移动，直到地址相同位置,no same node return nullptr
   while (n1 != n2) {
     n1 = n1->next;
     n2 = n2->next;
